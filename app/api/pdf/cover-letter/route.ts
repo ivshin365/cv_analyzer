@@ -17,10 +17,13 @@ export async function POST(req: NextRequest) {
     );
     const filename = `${String(name).replace(/[^a-z0-9]+/gi, "_") || "cover"}_Cover_Letter.pdf`;
 
-    return new NextResponse(new Uint8Array(pdf), {
+    const out = new Uint8Array(pdf);
+    return new NextResponse(out, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="${filename}"`,
+        "Content-Length": String(out.byteLength),
+        "Cache-Control": "no-store",
       },
     });
   } catch (e) {

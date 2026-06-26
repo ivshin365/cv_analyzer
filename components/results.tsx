@@ -15,6 +15,10 @@ async function downloadPdf(url: string, payload: unknown, fallbackName: string) 
     return;
   }
   const blob = await res.blob();
+  if (blob.size === 0) {
+    alert("The PDF came back empty — please try again.");
+    return;
+  }
   const href = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = href;
@@ -22,8 +26,12 @@ async function downloadPdf(url: string, payload: unknown, fallbackName: string) 
   a.download = /filename="(.+?)"/.exec(cd)?.[1] ?? fallbackName;
   document.body.appendChild(a);
   a.click();
-  a.remove();
-  URL.revokeObjectURL(href);
+  // Defer cleanup: revoking the object URL synchronously after click() races
+  // the browser's file write and can produce a 0-byte / corrupt download.
+  setTimeout(() => {
+    a.remove();
+    URL.revokeObjectURL(href);
+  }, 4000);
 }
 
 function KeywordChips({

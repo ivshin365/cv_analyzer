@@ -23,6 +23,26 @@ npm run dev
 
 Open http://localhost:3000.
 
+### Behind a corporate TLS proxy
+
+This machine sits behind a TLS-intercepting proxy, so Node/npm reject the
+registry and the AI Gateway certificate (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`).
+A PEM bundle of the Windows trust store is checked in as `corp-ca.pem`. Point
+Node at it whenever you run install / dev / build / start:
+
+```powershell
+$env:NODE_EXTRA_CA_CERTS = "C:\claude-cowork\cv_analyzer\corp-ca.pem"
+npm run dev
+```
+
+To avoid setting it every time (affects all your Node tooling):
+
+```powershell
+setx NODE_EXTRA_CA_CERTS "C:\claude-cowork\cv_analyzer\corp-ca.pem"
+```
+
+On Vercel (or any normal network) this is not needed — leave it unset there.
+
 ## How it works
 
 1. Extract text from the uploaded CV (`lib/extract`).
