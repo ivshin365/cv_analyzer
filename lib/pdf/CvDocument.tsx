@@ -21,7 +21,14 @@ const styles = StyleSheet.create({
     color: "#222222",
     lineHeight: 1.4,
   },
-  name: { fontSize: 20, fontFamily: "Helvetica-Bold", color: "#111111" },
+  name: {
+    fontSize: 20,
+    fontFamily: "Helvetica-Bold",
+    color: "#111111",
+    // Explicit line height: the page-level lineHeight is not applied to this
+    // larger font, so without this the headline collides up into the name.
+    lineHeight: 1.2,
+  },
   headline: { fontSize: 11, marginTop: 2, color: "#444444" },
   contact: { fontSize: 9, marginTop: 4, color: "#444444" },
   sectionTitle: {

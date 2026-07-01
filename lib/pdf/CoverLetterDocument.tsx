@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.5,
   },
   header: { marginBottom: 18 },
-  name: { fontSize: 16, fontFamily: "Helvetica-Bold", color: "#111111" },
+  name: { fontSize: 16, fontFamily: "Helvetica-Bold", color: "#111111", lineHeight: 1.2 },
   contact: { fontSize: 9, marginTop: 3, color: "#444444" },
   date: { fontSize: 10, marginBottom: 14, color: "#444444" },
   paragraph: { marginBottom: 10 },
